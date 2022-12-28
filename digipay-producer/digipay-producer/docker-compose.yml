@@ -12,14 +12,16 @@ services:
       - 5672:5672
       - 15672:15672
     volumes:
-      - "E:/java-workspace/rabitmqConsumer/rabitmqConsumer/test/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro"
-      - "E:/java-workspace/rabitmqConsumer/rabitmqConsumer/test/definitions.json:/etc/rabbitmq/definitions.json:ro"
+      - "H:/JAVA/rabbitmq/log/rabbitmq/test/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro"
+      - "H:/JAVA/rabbitmq/log/rabbitmq/test/definitions.json:/etc/rabbitmq/definitions.json:ro"
 #      - E:/java-workspace/rabitmqConsumer/rabitmqConsumer/test/definitions.json:/etc/rabbitmq/definitions.json
 #      - E:/java-workspace/rabitmqConsumer/rabitmqConsumer/test/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
 #      - "E:/java-workspace/rabitmqConsumer/rabitmqConsumer/etc/:/etc/rabbitmq/"
 #      - "E:/java-workspace/rabitmqConsumer/rabitmqConsumer/test/:/var/lib/rabbitmq"
-      - "E:/java-workspace/rabitmqConsumer/lib/:/var/lib/rabbitmq/"
-      - "E:/java-workspace/rabitmqConsumer/log/:/var/log/rabbitmq"
+#      - "E:/java-workspace/rabitmqConsumer/lib/:/var/lib/rabbitmq/"
+#      - "E:/java-workspace/rabitmqConsumer/log/:/var/log/rabbitmq"
+      - "H:/JAVA/rabbitmq/lib/:/var/lib/rabbitmq"
+      - "H:/JAVA/rabbitmq/log/:/var/log/rabbitmq"
 #      - E:/java-workspace/rabitmqConsumer/definitions.json:/opt/definitions.json:ro
 #      - E:/java-workspace/rabitmqConsumer/rabbitmq.config:/etc/rabbitmq/rabbitmq.config:ro
       #- "E:/java-workspace/rabitmqConsumer/rabitmqConsumer/test/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf"
@@ -28,20 +30,20 @@ services:
       - spring-cloud-network
   product-server:
     container_name: rabitconsumer
-    image: digipay/rabbit-consumer
+    image: consumer
     restart: always
     depends_on:
       - message-server
     ports:
-      - 8081:8081
+      - 8090:8090
       - 5008:5008
     environment:
       - JAVA_TOOL_OPTIONS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5008
     networks:
       - spring-cloud-network
   producer-server:
-    container_name: rabitproduc
-    image: digipay/rabbit-producer
+    container_name: rabitproducer
+    image: producer
     restart: always
     depends_on:
       - message-server
